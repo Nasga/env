@@ -231,12 +231,17 @@ tadam: mas /Applications/Tadam.app
 	echo "Install tadam"
 	mas install 531349534
 
-tmux: brew ${BREW_BIN}/tmux ~/.tmux.conf
+tmux: brew ${BREW_BIN}/tmux ~/.tmux.conf ~/.tmux/plugins
 ${BREW_BIN}/tmux:
 	brew install reattach-to-user-namespace
 	brew install tmux
+~/.tmux:
+	mkdir $@
+~/.tmux/plugins: ~/.tmux
+	ln -s ~/.dotfiles/tmux/plugins $@
 ~/.tmux.conf:
 	ln -s ~/.dotfiles/tmux/.tmux.conf ~/.tmux.conf
+	cd ~/.tmux
 
 trymodule: node ${BREW_BIN}/trymodule
 ${BREW_BIN}/trymodule:
